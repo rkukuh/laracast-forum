@@ -17,7 +17,9 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'title' => str(fake()->sentence)->beforeLast('.')->title(),
+            'body' => fake()->realText(rand(200, 600)),
         ];
     }
 }
