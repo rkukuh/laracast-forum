@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Comment;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,9 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(10)
-            ->has(Post::factory(rand(2, 10)))
-            ->create();
+        $users = User::factory(10)->create();
+        $posts = Post::factory(100)->recycle($users)->create();
+        Comment::factory(200)->recycle($users)->recycle($posts)->create();
 
         $admin = User::factory()->create([
             'name' => 'Super Admin',
