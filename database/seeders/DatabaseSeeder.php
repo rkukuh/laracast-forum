@@ -19,9 +19,12 @@ class DatabaseSeeder extends Seeder
         $posts = Post::factory(100)->recycle($users)->create();
         Comment::factory(200)->recycle($users)->recycle($posts)->create();
 
-        $admin = User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'admin@laracast-forum.com',
-        ]);
+        $admin = User::factory()
+            ->has(Post::factory(rand(2, 10)))
+            ->has(Comment::factory(rand(50, 100))->recycle($posts))
+            ->create([
+                'name' => 'Super Admin',
+                'email' => 'admin@laracast-forum.com',
+            ]);
     }
 }
