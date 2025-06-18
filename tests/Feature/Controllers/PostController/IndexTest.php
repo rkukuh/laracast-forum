@@ -9,3 +9,10 @@ it('should return the correct component', function () {
             $page->component('Posts/Index', true)
         );
 });
+
+it('passes posts to the view', function () {
+    get(route('posts.index'))
+        ->assertInertia(fn (AssertableInertia $page) => 
+            $page->has('posts')
+        );
+});
