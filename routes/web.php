@@ -25,3 +25,7 @@ Route::middleware([
 });
 
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+
+Route::get('/test', function () {
+    return App\Models\User::find(1);
+});
