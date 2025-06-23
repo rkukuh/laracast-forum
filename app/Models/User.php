@@ -44,12 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_secret',
     ];
 
-    protected $visible = [
-        'name',
-        'email',
-        'profile_photo_url',
-    ];
-
     /**
      * The accessors to append to the model's array form.
      *
