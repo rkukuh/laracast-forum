@@ -29,5 +29,5 @@ Route::middleware([
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/test', function () {
-    return UserResource::make(User::find(1));
+    return UserResource::make(User::find(11));
 });
