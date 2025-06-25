@@ -12,7 +12,7 @@
                 </li>
             </ul>
 
-            <Pagination />
+            <Pagination :meta="posts.meta" />
         </Container>
     </AppLayout>
 </template>
