@@ -22,8 +22,14 @@ it('passes posts to the view', function () {
     AssertableInertia::macro('hasResource', function (string $key, JsonResource $resource) {
         $props = $this->toArray()['props'];
 
+        $compiledResource = $resource->response()->getData(true);
+
         expect($props)
-            ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia");
+            ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia")
+            ->and($props[$key])
+            ->toEqual($compiledResource);
+
+        return $this;
     });
 
     $posts = Post::factory(3)->create();
