@@ -2,8 +2,6 @@
 
 use App\Http\Resources\PostResource;
 use App\Models\Post;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Inertia\Testing\AssertableInertia;
 use function Pest\Laravel\get;
 
@@ -20,40 +18,9 @@ it('should return the correct component', function () {
 });
 
 it('passes posts to the view', function () {
-    AssertableInertia::macro('hasResource', function (string $key, JsonResource $resource) {
-        $props = $this->toArray()['props'];
-
-        $compiledResource = $resource->response()->getData(true);
-
-        expect($props)
-            ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia")
-            ->and($props[$key])
-            ->toEqual($compiledResource);
-
-        return $this;
-    });
-
-    AssertableInertia::macro('hasPaginatedResource', function (string $key, ResourceCollection $resource) {
-        $props = $this->toArray()['props'];
-
-        $compiledResource = $resource->response()->getData(true);
-
-        expect($props)
-            ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia")
-            ->and($props[$key])
-            ->toHaveKeys(['data', 'links', 'meta'])
-            ->data
-            ->toEqual($compiledResource);
-
-        return $this;
-    });
-
     $posts = Post::factory(3)->create();
     
     get(route('posts.index'))
-        ->assertInertia(fn (AssertableInertia $page) => 
-            $page
-                ->hasResource('post', PostResource::make($posts->first()))
-                ->hasPaginatedResource('posts', PostResource::collection($posts->reverse()))
-        );
+        ->assertHasResource('post', PostResource::make($posts->first()))
+        ->assertHasPaginatedResource('posts', PostResource::collection($posts->reverse()));
 });

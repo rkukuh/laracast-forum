@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Testing\TestResponse;
+use Inertia\Testing\AssertableInertia;
 use Illuminate\Support\ServiceProvider;
 
 class TestingServiceProvider extends ServiceProvider
@@ -23,6 +27,44 @@ class TestingServiceProvider extends ServiceProvider
             return;
         }
 
-        //
+        AssertableInertia::macro('hasResource', function (string $key, JsonResource $resource) {
+            $props = $this->toArray()['props'];
+    
+            $compiledResource = $resource->response()->getData(true);
+    
+            expect($props)
+                ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia")
+                ->and($props[$key])
+                ->toEqual($compiledResource);
+    
+            return $this;
+        });
+    
+        AssertableInertia::macro('hasPaginatedResource', function (string $key, ResourceCollection $resource) {
+            $props = $this->toArray()['props'];
+    
+            $compiledResource = $resource->response()->getData(true);
+    
+            expect($props)
+                ->toHaveKey($key, message: "Key \"{$key}\" not passed as a property in Inertia")
+                ->and($props[$key])
+                ->toHaveKeys(['data', 'links', 'meta'])
+                ->data
+                ->toEqual($compiledResource);
+    
+            return $this;
+        });
+
+        TestResponse::macro('assertHasResource', function (string $key, JsonResource $resource) {
+            return $this->assertInertia(fn (AssertableInertia $page) => 
+                $page->hasResource($key, $resource)
+            );
+        });
+
+        TestResponse::macro('assertHasPaginatedResource', function (string $key, ResourceCollection $resource) {
+            return $this->assertInertia(fn (AssertableInertia $page) => 
+                $page->hasPaginatedResource($key, $resource)
+            );
+        });
     }
 }
