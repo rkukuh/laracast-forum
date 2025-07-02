@@ -54,6 +54,6 @@ it('passes posts to the view', function () {
         ->assertInertia(fn (AssertableInertia $page) => 
             $page
                 ->hasResource('post', PostResource::make($posts->first()))
-                ->hasPaginatedResource('posts', PostResource::collection($posts))
+                ->hasPaginatedResource('posts', PostResource::collection($posts->reverse()))
         );
 });
