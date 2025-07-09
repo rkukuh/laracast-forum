@@ -1,9 +1,19 @@
 <template>
     <AppLayout :title="post.title">
-        <h1>{{ post.title }}</h1>
-        <span>{{ formattedDate }} by {{ post.user.name }}</span>
+        <Container>
+            <h1 class="text-2xl font-bold">
+                {{ post.title }}
+            </h1>
 
-        <article>{{ post.body }}</article>
+            <span class="block mt-1 text-sm text-gray-500">
+                {{ formattedDate }}
+                by {{ post.user.name }}
+            </span>
+
+            <article class="mt-6">
+                {{ post.body }}
+            </article>
+        </Container>
     </AppLayout>
 </template>
 
@@ -11,6 +21,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {computed} from "vue";
 import {formatDistance, parseISO} from "date-fns";
+import Container from "@/Components/Container.vue";
 
 const props = defineProps(['post']);
 
