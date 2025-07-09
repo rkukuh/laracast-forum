@@ -1,7 +1,7 @@
 <template>
     <AppLayout :title="post.title">
         <h1>{{ post.title }}</h1>
-        <span>{{ formattedDate }}</span>
+        <span>{{ formattedDate }} by {{ post.user.name }}</span>
 
         <article>{{ post.body }}</article>
     </AppLayout>
