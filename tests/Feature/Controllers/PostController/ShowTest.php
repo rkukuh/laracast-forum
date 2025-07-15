@@ -23,10 +23,10 @@ it('passes the post to the view', function () {
 });
 
 it('passes comments to the view', function () {
-    $this->withoutExceptionHandling();
-
     $post = Post::factory()->create();
     $comments = Comment::factory(5)->for($post)->create();
+
+    $comments->load('user');
 
     get(route('posts.show', $post))
         ->assertHasPaginatedResource('comments', CommentResource::collection($comments));
