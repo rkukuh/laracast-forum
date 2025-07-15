@@ -28,6 +28,7 @@
                         </span>
 
                         <span class="first-letter:uppercase block pt-1 text-sm text-gray-500">
+                            {{ relativeDate(comment.created_at) }}
                             by {{ comment.user.name }}
                         </span>
                     </li>
@@ -42,13 +43,11 @@
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {computed} from "vue";
-import {formatDistance, parseISO} from "date-fns";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
+import {relativeDate} from "@/Utilities/date.js";
 
 const props = defineProps(['post', 'comments']);
 
-const formattedDate = computed(() => formatDistance(parseISO(props.post.created_at), new Date(), {
-    addSuffix: true,
-}))
+const formattedDate = computed(() => relativeDate(props.post.created_at));
 </script>
