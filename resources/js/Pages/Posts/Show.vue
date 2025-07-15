@@ -28,7 +28,7 @@
                         </span>
 
                         <span class="first-letter:uppercase block pt-1 text-sm text-gray-500">
-                            by John Doe
+                            by {{ comment.user.name }}
                         </span>
                     </li>
                 </ul>
