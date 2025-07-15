@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
+use App\Models\Comment;
 use App\Models\Post;
 use function Pest\Laravel\get;
 
@@ -18,4 +20,14 @@ it('passes the post to the view', function () {
 
     get(route('posts.show', $post))
         ->assertHasResource('post', PostResource::make($post));
+});
+
+it('passes comments to the view', function () {
+    $this->withoutExceptionHandling();
+
+    $post = Post::factory()->create();
+    $comments = Comment::factory(5)->for($post)->create();
+
+    get(route('posts.show', $post))
+        ->assertHasPaginatedResource('comments', CommentResource::collection($comments));
 });
