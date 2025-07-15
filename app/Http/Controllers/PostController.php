@@ -50,7 +50,11 @@ class PostController extends Controller
             'post' => PostResource::make($post->load('user')),
 
             'comments' => CommentResource::collection(
-                $post->comments()->with('user')->paginate(5)),
+                $post->comments()
+                        ->with('user')
+                        ->latest()      // first, order by date desc
+                        ->latest('id')  // then order by id to make sure it show the latest first
+                        ->paginate(5)),
         ]);
     }
 
