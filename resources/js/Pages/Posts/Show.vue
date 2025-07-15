@@ -23,14 +23,7 @@
                         :key="comment.id"
                         class="px-2 py-4">
 
-                        <span class="text-sm">
-                            {{ comment.body }}
-                        </span>
-
-                        <span class="first-letter:uppercase block pt-1 text-sm text-gray-500">
-                            {{ relativeDate(comment.created_at) }}
-                            by {{ comment.user.name }}
-                        </span>
+                        <Comment :comment="comment" />
                     </li>
                 </ul>
 
@@ -46,6 +39,7 @@ import {computed} from "vue";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
 import {relativeDate} from "@/Utilities/date.js";
+import Comment from "@/Components/Comment.vue";
 
 const props = defineProps(['post', 'comments']);
 
