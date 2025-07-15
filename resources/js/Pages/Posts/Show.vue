@@ -13,6 +13,28 @@
             <article class="mt-6">
                 <pre class="whitespace-pre-wrap font-sans">{{ post.body }}</pre>
             </article>
+
+            <div class="mt-12">
+                <h2 class="text-xl font-semibold">Comments</h2>
+
+                <ul class="divide-y mt-4">
+                    <li
+                        v-for="comment in comments.data"
+                        :key="comment.id"
+                        class="px-2 py-4">
+
+                        <span class="text-sm">
+                            {{ comment.body }}
+                        </span>
+
+                        <span class="first-letter:uppercase block pt-1 text-sm text-gray-500">
+                            by John Doe
+                        </span>
+                    </li>
+                </ul>
+
+                <Pagination :meta="comments.meta" />
+            </div>
         </Container>
     </AppLayout>
 </template>
@@ -22,8 +44,9 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import {computed} from "vue";
 import {formatDistance, parseISO} from "date-fns";
 import Container from "@/Components/Container.vue";
+import Pagination from "@/Components/Pagination.vue";
 
-const props = defineProps(['post']);
+const props = defineProps(['post', 'comments']);
 
 const formattedDate = computed(() => formatDistance(parseISO(props.post.created_at), new Date(), {
     addSuffix: true,
