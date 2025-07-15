@@ -50,7 +50,7 @@ class PostController extends Controller
             'post' => PostResource::make($post->load('user')),
 
             'comments' => CommentResource::collection(
-                $post->comments()->with('user')->paginate()),
+                $post->comments()->with('user')->paginate(5)),
         ]);
     }
 
