@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(100)->recycle($users)->create();
-        Comment::factory(200)->recycle($users)->recycle($posts)->create();
+
+        $posts = Post::factory(100)
+            ->has(Comment::factory(rand(10, 20))->recycle($users))
+            ->recycle($users)
+            ->create();
 
         $admin = User::factory()
             ->has(Post::factory(rand(2, 10)))
