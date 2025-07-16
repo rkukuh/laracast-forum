@@ -47,9 +47,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return inertia('Posts/Show', [
-            'post' => PostResource::make($post->load('user')),
+            'post' => fn () => PostResource::make($post->load('user')),
 
-            'comments' => CommentResource::collection(
+            'comments' => fn () => CommentResource::collection(
                 $post->comments()
                         ->with('user')
                         ->latest()      // first, order by date desc
