@@ -30,12 +30,18 @@ it('redirects to the post show page', function () {
         ->assertRedirect(route('posts.show', $post));
 });
 
-it('requires a valid body', function () {
+it('requires a valid body', function ($value) {
     $post = Post::factory()->create();
 
     actingAs(User::factory()->create())
         ->post(route('posts.comments.store', $post), [
-            'body' => null,
+            'body' => $value,
         ])
         ->assertInvalid('body');
-});
+})->with([
+    null,
+    1,
+    1.5,
+    true,
+    str_repeat('a', 256),
+]);
