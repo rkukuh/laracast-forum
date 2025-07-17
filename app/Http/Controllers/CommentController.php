@@ -34,6 +34,8 @@ class CommentController extends Controller
         $comment->user()->associate($request->user());
         $comment->post()->associate($post);
         $comment->save();
+
+        return to_route('posts.show', $post);
     }
 
     /**
