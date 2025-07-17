@@ -30,7 +30,7 @@ class CommentController extends Controller
     public function store(Request $request, Post $post)
     {
         $request->validate([
-            'body' => 'required',
+            'body' => ['required', 'string', 'max:255'],
         ]);
 
         $comment = Comment::make($request->all());
