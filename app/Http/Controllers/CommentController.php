@@ -33,10 +33,11 @@ class CommentController extends Controller
             'body' => ['required', 'string', 'max:255'],
         ]);
 
-        Comment::make($data)
-            ->user()->associate($request->user())
-            ->post()->associate($post)
-            ->save();
+        Comment::create([
+            ...$data,
+            'post_id' => $post->id,
+            'user_id' => $request->user()->id,
+        ]);
 
         return to_route('posts.show', $post);
     }
