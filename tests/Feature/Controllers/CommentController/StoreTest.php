@@ -15,6 +15,7 @@ it('can store a comment', function () {
 
     $this->assertDatabaseHas(Comment::class, [
         'post_id' => $post->id,
+        'user_id' => $user->id,
         'body' => 'This is test comment',
     ]);
 });
