@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/rkukuh/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/rkukuh/Herd/laracast-forum/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/rkukuh/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/rkukuh/Herd/laracast-forum"
+            }
+        }
+    }
+}
